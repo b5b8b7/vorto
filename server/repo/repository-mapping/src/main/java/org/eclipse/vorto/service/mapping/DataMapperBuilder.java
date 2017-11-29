@@ -14,26 +14,16 @@
  */
 package org.eclipse.vorto.service.mapping;
 
-import org.apache.commons.jxpath.ClassFunctions;
 import org.eclipse.vorto.service.mapping.ditto.DittoMapper;
 
 public class DataMapperBuilder {
-	
-	private ClassFunctions functions;
-	
+		
 	private IMappingSpecification specification;
 		
-	protected DataMapperBuilder() {
-		
-	}
+	protected DataMapperBuilder() {}
 
 	public DittoMapper buildDittoMapper() {
-		return new DittoMapper(specification, functions);
-	}
-
-	public DataMapperBuilder withConverters(Class<?> converterFunctions, String namespace) {
-		this.functions = new ClassFunctions(converterFunctions, namespace);
-		return this;
+		return new DittoMapper(specification);
 	}
 
 	public DataMapperBuilder withSpecification(IMappingSpecification specification) {

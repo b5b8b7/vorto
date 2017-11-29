@@ -33,7 +33,6 @@ import org.apache.commons.lang3.Conversion;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.text.StrSubstitutor;
-import org.eclipse.vorto.repository.api.ModelId;
 import org.eclipse.vorto.repository.api.content.FunctionblockModel;
 import org.eclipse.vorto.repository.api.content.IReferenceType;
 import org.eclipse.vorto.repository.api.content.Infomodel;
@@ -52,7 +51,7 @@ import org.eclipse.vorto.service.mapping.converters.DateUtils;
  * Maps data input to Eclipse Ditto / Vorto compliant data format
  *
  */
-public class DittoMapper implements IDataMapper<DittoOutput> {
+public class DittoMapper implements IDataMapper<DittoPayload> {
 
 	private static final DateFormat JSON_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 
@@ -64,30 +63,28 @@ public class DittoMapper implements IDataMapper<DittoOutput> {
 	private static final String ATTRIBUTE_VALUE = "value";
 	private static final String ATTRIBUTE_XPATH = "xpath";
 	
-	public DittoMapper(IMappingSpecification loader,ClassFunctions customFunctions) {
-		this.specification = loader;
+	public DittoMapper(IMappingSpecification mappingSpecification) {
+		this.specification = mappingSpecification;
 		this.converterLibrary = new FunctionLibrary();
-		if (customFunctions != null) {
-			this.converterLibrary.addFunctions(customFunctions);
-		}
+		
 		this.converterLibrary.addFunctions(new ClassFunctions(Conversion.class, "conversion"));
 		this.converterLibrary.addFunctions(new ClassFunctions(StringUtils.class, "string"));
 		this.converterLibrary.addFunctions(new ClassFunctions(NumberUtils.class, "number"));
 		this.converterLibrary.addFunctions(new ClassFunctions(DateUtils.class, "date"));
 		this.converterLibrary.addFunctions(new ClassFunctions(ConvertUtils.class, "type"));
 		
-		Optional<Functions> functionsFromMappings = loader.getCustomFunctions();
+		Optional<Functions> functionsFromMappings = mappingSpecification.getCustomFunctions();
 		if (functionsFromMappings.isPresent()) {
 			converterLibrary.addFunctions(functionsFromMappings.get());
 		}
 	}
 	
-	public DittoOutput map(DataInput input, MappingContext mappingContext) {
+	public DittoPayload map(DataInput input, MappingContext mappingContext) {
 	
 		JXPathContext context = newContext(input.getValue());
 		context.setFunctions(converterLibrary);
 
-		DittoOutput output = new DittoOutput();
+		DittoPayload output = new DittoPayload();
 		
 		final Infomodel deviceInfoModel = specification.getInfoModel();
 		

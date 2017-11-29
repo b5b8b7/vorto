@@ -12,13 +12,27 @@
  * Contributors:
  * Bosch Software Innovations GmbH - Please refer to git log
  */
-package org.eclipse.vorto.service.mapping;
+package org.eclipse.vorto.service.mapping.spec;
 
-public interface IDataMapper<MappedPayload extends JsonPayload> {
+import org.eclipse.vorto.service.mapping.IMappingSpecification;
+
+public interface IMappingSpecificationReader {
+
+	IMappingSpecification read() throws CannotReadSpecificationProblem;
 	
-	MappedPayload map(DataInput input, MappingContext context);
-	
-	static DataMapperBuilder newBuilder() {
-		return new DataMapperBuilder();
+	public class CannotReadSpecificationProblem extends RuntimeException {
+		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public CannotReadSpecificationProblem(String msg) {
+			super(msg);
+		}
+		
+		public CannotReadSpecificationProblem(String msg, Throwable t) {
+			super(msg,t);
+		}
 	}
 }

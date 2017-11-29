@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class DittoOutput implements JsonPayload {
+public class DittoPayload implements JsonPayload {
 
 	private Map<String, Feature> features = new HashMap<>();
 	

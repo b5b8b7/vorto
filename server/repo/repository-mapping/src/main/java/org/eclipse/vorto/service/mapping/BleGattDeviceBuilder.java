@@ -17,7 +17,6 @@ package org.eclipse.vorto.service.mapping;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.eclipse.vorto.repository.api.ModelId;
 import org.eclipse.vorto.repository.api.content.BooleanAttributeProperty;
 import org.eclipse.vorto.repository.api.content.BooleanAttributePropertyType;
 import org.eclipse.vorto.repository.api.content.FunctionblockModel;

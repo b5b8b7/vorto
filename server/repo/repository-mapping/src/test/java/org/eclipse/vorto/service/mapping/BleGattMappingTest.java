@@ -36,7 +36,7 @@ import org.eclipse.vorto.repository.api.content.PrimitiveType;
 import org.eclipse.vorto.repository.api.content.Stereotype;
 import org.eclipse.vorto.service.mapping.converters.JavascriptFunctions;
 import org.eclipse.vorto.service.mapping.ditto.DittoMapper;
-import org.eclipse.vorto.service.mapping.ditto.DittoOutput;
+import org.eclipse.vorto.service.mapping.ditto.DittoPayload;
 import org.eclipse.vorto.service.mapping.ditto.Feature;
 import org.junit.Test;
 
@@ -60,7 +60,7 @@ public class BleGattMappingTest {
 		BleGattCharacteristic accelerometerValue = bleGattDevice.getCharacteristics().get("f000aa81-0451-4000-b000-000000000000");
 		accelerometerValue.setData(new Short[] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* X Value = 1.0 */0x00, 0x40, /* Y Value = -1 */ 0x00, 0xC0, /* Z Value  = 0.0 */ 0x00, 0x00 });
 		
-		DittoOutput mappedDittoOutput = mapper.map(DataInput.newInstance().fromObject(bleGattDevice),MappingContext.empty());
+		DittoPayload mappedDittoOutput = mapper.map(DataInput.newInstance().fromObject(bleGattDevice),MappingContext.empty());
 		
 		// TEST
 		Feature buttonFeature = mappedDittoOutput.getFeatures().get("accelerometer");
