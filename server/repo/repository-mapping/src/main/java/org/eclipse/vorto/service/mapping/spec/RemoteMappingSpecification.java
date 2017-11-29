@@ -42,7 +42,7 @@ public class RemoteMappingSpecification implements IMappingSpecification {
 	
 	private static final String STEREOTYPE = "functions";
 	
-	private Map<ModelId, FunctionblockModel> fbs = new HashMap<ModelId, FunctionblockModel>();
+	private Map<String, FunctionblockModel> fbs = new HashMap<String, FunctionblockModel>();
 	
 	private FunctionLibrary library = new FunctionLibrary();
 	private HashMap<String, JavascriptFunctions> namespaces = new HashMap<String, JavascriptFunctions>();
@@ -95,7 +95,7 @@ public class RemoteMappingSpecification implements IMappingSpecification {
 				} else {
 					fbm = this.repositoryClient.getContent(fbModelId, FunctionblockModel.class).get();
 				}
-				this.fbs.put(fbModelId, fbm);
+				this.fbs.put(fbProperty.getName(), fbm);
 			}
 		} catch (Exception e) {
 			throw new MappingSpecificationProblem("Cannot create mapping specification", e);
@@ -108,8 +108,8 @@ public class RemoteMappingSpecification implements IMappingSpecification {
 	}
 
 	@Override
-	public FunctionblockModel getFunctionBlock(ModelId modelId) {
-		return fbs.get(modelId);
+	public FunctionblockModel getFunctionBlock(String fbPropertyName) {
+		return fbs.get(fbPropertyName);
 	}
 
 	@Override

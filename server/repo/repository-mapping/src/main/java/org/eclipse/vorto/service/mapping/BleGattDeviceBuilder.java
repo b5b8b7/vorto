@@ -47,7 +47,7 @@ public class BleGattDeviceBuilder {
 
 		for (ModelProperty fbprop : infomodel.getFunctionblocks())
 		{
-			FunctionblockModel fb = mappingSpec.getFunctionBlock((ModelId) fbprop.getType());
+			FunctionblockModel fb = mappingSpec.getFunctionBlock(fbprop.getName());
 
 			if ("blegatt".equals(fb.getTargetPlatformKey())) {
 				BleGattService service = new BleGattService();

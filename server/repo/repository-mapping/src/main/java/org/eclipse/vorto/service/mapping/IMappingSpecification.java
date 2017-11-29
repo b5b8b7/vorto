@@ -17,7 +17,6 @@ package org.eclipse.vorto.service.mapping;
 import java.util.Optional;
 
 import org.apache.commons.jxpath.Functions;
-import org.eclipse.vorto.repository.api.ModelId;
 import org.eclipse.vorto.repository.api.content.FunctionblockModel;
 import org.eclipse.vorto.repository.api.content.Infomodel;
 
@@ -30,11 +29,11 @@ public interface IMappingSpecification {
 	Infomodel getInfoModel();
 	
 	/**
-	 * Resolves the referenced function block by the given modelID
+	 * Resolves the referenced function block by the given fb property name
 	 * @param modelId
 	 * @return
 	 */
-	FunctionblockModel getFunctionBlock(ModelId modelId);
+	FunctionblockModel getFunctionBlock(String propertyName);
 	
 	/**
 	 * Gets all custom Mapping conversion functions

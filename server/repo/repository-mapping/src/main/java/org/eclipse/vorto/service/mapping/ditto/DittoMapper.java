@@ -103,7 +103,7 @@ public class DittoMapper implements IDataMapper<DittoOutput> {
 	private Feature mapFunctionBlock(ModelProperty fbProperty, JXPathContext context) {	
 		FeatureBuilder featureBuilder = Feature.newBuilder(fbProperty.getName());
 		
-		FunctionblockModel fbModel = specification.getFunctionBlock((ModelId)fbProperty.getType());
+		FunctionblockModel fbModel = specification.getFunctionBlock(fbProperty.getName());
 		
 		for (ModelProperty statusProperty : fbModel.getStatusProperties()) {
 			Optional<Stereotype> sourceStereotype = statusProperty.getStereotype(STEREOTYPE);

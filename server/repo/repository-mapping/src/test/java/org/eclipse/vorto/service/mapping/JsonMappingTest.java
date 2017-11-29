@@ -15,6 +15,7 @@ import org.eclipse.vorto.service.mapping.ditto.Feature;
 import org.eclipse.vorto.service.mapping.spec.MappingSpecificationProblem;
 import org.eclipse.vorto.service.mapping.spec.SpecWithArrayPayload;
 import org.eclipse.vorto.service.mapping.spec.SpecWithCustomFunction;
+import org.eclipse.vorto.service.mapping.spec.SpecWithSameFunctionblock;
 import org.eclipse.vorto.service.mapping.spec.SpecWithTimestamp;
 import org.eclipse.vorto.service.mapping.spec.SpecWithTypeConversion;
 import org.junit.Test;
@@ -198,6 +199,28 @@ public class JsonMappingTest {
 		assertNull(voltageFeature);
 
 		System.out.println(mappedDittoOutput.toJson());
+	}
+	
+	@Test
+	public void testDittoMappingWithInfoModelUsingSameFunctionblock() throws Exception {
+
+		DittoMapper mapper = IDataMapper.newBuilder().withSpecification(new SpecWithSameFunctionblock())
+				.buildDittoMapper();
+
+		String json = "{\"btnvalue1\" : 2, \"btnvalue2\": 10}";
+
+		DittoOutput mappedDittoOutput = mapper.map(DataInput.newInstance().fromJson(json), MappingContext.empty());
+
+		Feature buttonFeature = mappedDittoOutput.getFeatures().get("btn1");
+
+		assertEquals(2, buttonFeature.getProperty("sensor_value"));
+
+		Feature button2Feature = mappedDittoOutput.getFeatures().get("btn2");
+
+		assertEquals(10, button2Feature.getProperty("sensor_value"));
+
+		System.out.println(mappedDittoOutput.toJson());
+
 	}
 
 }
